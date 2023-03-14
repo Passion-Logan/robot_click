@@ -126,7 +126,7 @@ public class Click {
         }
         if (text.contains("祝下次好运")) {
             // 结算重开
-            StartGame(robot, gameX, gameY);
+            ReStartGame(robot, gameX, gameY);
         }
         if (text.contains("连接超时")) {
             // 连接超时

@@ -58,6 +58,18 @@ public class GameControl {
     }
 
     /**
+     * 游戏重开控制
+     *
+     * @param robot robot
+     * @param gameX gameX
+     * @param gameY gameY
+     */
+    public static void ReStartGame(Robot robot, int gameX, int gameY) {
+        // 点击ESC 点击确定
+        // 调用开始游戏方法
+    }
+
+    /**
      * 观战
      *
      * @param robot robot
