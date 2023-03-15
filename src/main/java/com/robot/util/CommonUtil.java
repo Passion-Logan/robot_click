@@ -53,7 +53,7 @@ public class CommonUtil {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(300);
+        robot.delay(800);
     }
 
 }
