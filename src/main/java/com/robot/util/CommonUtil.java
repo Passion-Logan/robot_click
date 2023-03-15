@@ -7,6 +7,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 
 import static java.awt.event.KeyEvent.VK_ALT;
@@ -65,7 +66,7 @@ public class CommonUtil {
     public static void saveImageFromClipboard() throws Exception {
         //获取粘贴板图片
         Image image = getImageFromClipboard();
-        File file = new File("D:\\Myfile\\a__temp\\aaaa.png");
+        File file = new File("C:\\Users\\Cody\\Desktop\\test\\aaaa.jpeg");
         if (file.exists()) {
             file.delete();
         }
@@ -73,8 +74,8 @@ public class CommonUtil {
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = bufferedImage.createGraphics();
         g.drawImage(image, null, null);
-        //ImageIO.write((RenderedImage)bufferedImage, "jpg", file);
-        ImageIO.write(bufferedImage, "png", file);
+        ImageIO.write(bufferedImage, "jpg", file);
+//        ImageIO.write(bufferedImage, "png", file);
     }
 
     /**

@@ -1,13 +1,16 @@
 package com.robot.process;
 
+import cn.hutool.core.util.StrUtil;
+import com.robot.entity.LineData;
 import com.robot.entity.Result;
 import com.robot.util.CommonUtil;
+import com.sun.prism.shader.Mask_TextureSuper_AlphaTest_Loader;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-import static java.awt.event.KeyEvent.VK_F;
 import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
 
 /**
@@ -21,38 +24,6 @@ import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
 public class GameControl {
 
     static int SCREEN_W = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    static Map<Integer, Map<String, Map<String, Integer>>> BUTTON_MAP = new HashMap<>();
-
-    static {
-        Map<String, Map<String, Integer>> buttons1 = new HashMap<>();
-        // 准备按钮
-        HashMap<String, Integer> ready = new HashMap<>();
-        ready.put("X", 123);
-        ready.put("Y", 123);
-        buttons1.put("ready", ready);
-        // 观战按钮
-        HashMap<String, Integer> look = new HashMap<>();
-        look.put("X", 123);
-        look.put("Y", 123);
-        buttons1.put("look", look);
-        //中间的按钮-重新连接、
-        HashMap<String, Integer> reload = new HashMap<>();
-        look.put("X", 123);
-        look.put("Y", 123);
-        buttons1.put("look", look);
-
-
-        BUTTON_MAP.put(1920, buttons1);
-        // 2k分辨率的按钮坐标
-        Map<String, Map<String, Integer>> buttons2 = new HashMap<>();
-        // 准备按钮
-        HashMap<String, Integer> ready2 = new HashMap<>();
-        ready2.put("X", 425);
-        ready2.put("Y", 939);
-        buttons2.put("ready", ready2);
-
-        BUTTON_MAP.put(2560, buttons2);
-    }
 
     /**
      * 开始游戏控制
@@ -60,13 +31,14 @@ public class GameControl {
      * @param robot robot
      */
     public static void StartGame(Robot robot, Result result) {
-        Map<String, Integer> ready = BUTTON_MAP.get(SCREEN_W).get("ready");
+        Map<String, Integer> bounding = findBounding(result, "开始");
         // 点击准备
-        CommonUtil.CommaClick(robot, ready.get("X"), ready.get("Y"));
+//        CommonUtil.CommaClick(robot, 230, 965);
+        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
         // 2.5秒按一次F
-        robot.keyPress(VK_F);
-        robot.keyRelease(VK_F);
-        robot.delay(2500);
+//        robot.keyPress(VK_F);
+//        robot.keyRelease(VK_F);
+//        robot.delay(2500);
     }
 
     /**
@@ -88,9 +60,8 @@ public class GameControl {
      * @param result result
      */
     public static void LookGame(Robot robot, Result result) {
-        Map<String, Integer> look = BUTTON_MAP.get(SCREEN_W).get("look");
         // 点击观战
-        CommonUtil.CommaClick(robot, look.get("X"), look.get("Y"));
+//        CommonUtil.CommaClick(robot, look.get("X"), look.get("Y"));
         // 2.5秒按一次pagedown
         robot.keyPress(VK_PAGE_DOWN);
         robot.keyRelease(VK_PAGE_DOWN);
@@ -115,6 +86,26 @@ public class GameControl {
      */
     public static void ReloadGame(Robot robot, Result result) {
         // 点击确定
+    }
+
+    /**
+     * 查找坐标
+     *
+     * @param result ocr结果
+     * @param word   关键字
+     */
+    private static Map<String, Integer> findBounding(Result result, String word) {
+        Map<String, Integer> bound = new HashMap<>();
+        if (Objects.equals(result.getErrorCode(), "0")) {
+            for (LineData line : result.getLines()) {
+                if (Objects.equals(line.getWords(), word)) {
+                    String[] split = line.getBoundingBox().split(StrUtil.COMMA);
+                    bound.put("x", (Integer.parseInt(split[0]) + Integer.parseInt(split[2])) / 2);
+                    bound.put("y", (Integer.parseInt(split[5]) + Integer.parseInt(split[3])) / 2);
+                }
+            }
+        }
+        return bound;
     }
 
 }

@@ -6,6 +6,7 @@ import com.robot.util.OcrUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,19 +26,6 @@ public class Click {
 
     static int SCREEN_W = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     static int SCREEN_H = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    static HashMap<Integer, Map<String, Integer>> OCR_MAP = new HashMap<>();
-
-    static {
-        Map<String, Integer> temp = new HashMap<>();
-        temp.put("X", 1070);
-        temp.put("Y", 40);
-        OCR_MAP.put(1920, temp);
-
-        Map<String, Integer> temp2 = new HashMap<>();
-        temp2.put("X", 1517);
-        temp2.put("Y", 57);
-        OCR_MAP.put(2560, temp2);
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Click::RobotBody);
@@ -46,8 +34,8 @@ public class Click {
     public static void RobotBody() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Robot");
-        frame.setSize(400, 200);
-        frame.setLocation(SCREEN_W / 2 - 200, SCREEN_H / 2 - 100);
+        frame.setSize(200, 100);
+        frame.setLocation(SCREEN_W / 2 - 100, SCREEN_H / 2 - 50);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container container = frame.getContentPane();
 
@@ -55,7 +43,6 @@ public class Click {
         placeComponents(panel);
         container.add(panel, BorderLayout.CENTER);
 
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -95,6 +82,7 @@ public class Click {
      */
     private static void controlFactory(Robot robot, String text) {
         Result result = JSONUtil.toBean(text, Result.class);
+        System.out.println(result);
         if (text.contains("开始游戏")) {
             // 开始游戏
             StartGame(robot, result);
