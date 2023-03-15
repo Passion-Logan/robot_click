@@ -1,7 +1,6 @@
 package com.robot.process;
 
 import com.robot.util.CommonUtil;
-import com.sun.jna.IntegerType;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -20,7 +19,7 @@ import static java.awt.event.KeyEvent.*;
 public class GameControl {
 
     static int SCREEN_W = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    static Map<Integer, Map<String, Map<String, Integer>>> BUTTON_MAP;
+    static Map<Integer, Map<String, Map<String, Integer>>> BUTTON_MAP = new HashMap<>();
 
     static {
         Map<String, Map<String, Integer>> buttons1 = new HashMap<>();
@@ -34,10 +33,23 @@ public class GameControl {
         look.put("X", 123);
         look.put("Y", 123);
         buttons1.put("look", look);
+        //中间的按钮-重新连接、
+        HashMap<String, Integer> reload = new HashMap<>();
+        look.put("X", 123);
+        look.put("Y", 123);
+        buttons1.put("look", look);
 
-        // todo 添加 2k分辨率的按钮坐标
+
         BUTTON_MAP.put(1920, buttons1);
-//        BUTTON_MAP.put(2560, buttons2);
+        // 2k分辨率的按钮坐标
+        Map<String, Map<String, Integer>> buttons2 = new HashMap<>();
+        // 准备按钮
+        HashMap<String, Integer> ready2 = new HashMap<>();
+        ready2.put("X", 425);
+        ready2.put("Y", 939);
+        buttons2.put("ready", ready2);
+
+        BUTTON_MAP.put(2560, buttons2);
     }
 
     /**
@@ -88,6 +100,7 @@ public class GameControl {
 
     /**
      * 连接超时
+     *
      * @param robot robot
      * @param gameX gameX
      * @param gameY gameY
@@ -95,4 +108,16 @@ public class GameControl {
     public static void TimeOutGame(Robot robot, int gameX, int gameY) {
         // 点击确定
     }
+
+    /**
+     * 重新连接
+     *
+     * @param robot robot
+     * @param gameX gameX
+     * @param gameY gameY
+     */
+    public static void ReloadGame(Robot robot, int gameX, int gameY) {
+        // 点击确定
+    }
+
 }
