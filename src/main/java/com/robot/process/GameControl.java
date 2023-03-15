@@ -1,12 +1,14 @@
 package com.robot.process;
 
+import com.robot.entity.Result;
 import com.robot.util.CommonUtil;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.awt.event.KeyEvent.*;
+import static java.awt.event.KeyEvent.VK_F;
+import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
 
 /**
  * @author wql
@@ -56,10 +58,8 @@ public class GameControl {
      * 开始游戏控制
      *
      * @param robot robot
-     * @param gameX gameX
-     * @param gameY gameY
      */
-    public static void StartGame(Robot robot, int gameX, int gameY) {
+    public static void StartGame(Robot robot, Result result) {
         Map<String, Integer> ready = BUTTON_MAP.get(SCREEN_W).get("ready");
         // 点击准备
         CommonUtil.CommaClick(robot, ready.get("X"), ready.get("Y"));
@@ -84,11 +84,10 @@ public class GameControl {
     /**
      * 观战
      *
-     * @param robot robot
-     * @param gameX gameX
-     * @param gameY gameY
+     * @param robot  robot
+     * @param result result
      */
-    public static void LookGame(Robot robot, int gameX, int gameY) {
+    public static void LookGame(Robot robot, Result result) {
         Map<String, Integer> look = BUTTON_MAP.get(SCREEN_W).get("look");
         // 点击观战
         CommonUtil.CommaClick(robot, look.get("X"), look.get("Y"));
@@ -101,22 +100,20 @@ public class GameControl {
     /**
      * 连接超时
      *
-     * @param robot robot
-     * @param gameX gameX
-     * @param gameY gameY
+     * @param robot  robot
+     * @param result result
      */
-    public static void TimeOutGame(Robot robot, int gameX, int gameY) {
+    public static void TimeOutGame(Robot robot, Result result) {
         // 点击确定
     }
 
     /**
      * 重新连接
      *
-     * @param robot robot
-     * @param gameX gameX
-     * @param gameY gameY
+     * @param robot  robot
+     * @param result result
      */
-    public static void ReloadGame(Robot robot, int gameX, int gameY) {
+    public static void ReloadGame(Robot robot, Result result) {
         // 点击确定
     }
 
