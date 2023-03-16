@@ -6,11 +6,9 @@ import com.robot.util.OcrUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.robot.process.GameControl.*;
+import static java.awt.event.KeyEvent.*;
 
 /**
  * main
@@ -26,6 +24,7 @@ public class Click {
 
     static int SCREEN_W = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     static int SCREEN_H = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    static String IMG_PATH;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Click::RobotBody);
@@ -43,11 +42,16 @@ public class Click {
         placeComponents(panel);
         container.add(panel, BorderLayout.CENTER);
 
+        frame.pack();
         frame.setVisible(true);
     }
 
     private static void placeComponents(JPanel panel) {
+        panel.setLayout(new GridLayout(1, 1, 10, 10));
+        JTextField imgPath = new JTextField("C:\\Users\\Administrator\\Desktop\\test", 5);
+        panel.add(imgPath);
         JButton start = new JButton("开始");
+        IMG_PATH = imgPath.getText();
         start.addActionListener(e -> RobotStartControl());
         panel.add(start);
     }
@@ -58,7 +62,7 @@ public class Click {
     private static void RobotStartControl() {
         try {
             Robot robot = new Robot();
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             RobotMain(robot);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +75,7 @@ public class Click {
      * @param robot robot
      */
     public static void RobotMain(Robot robot) {
-        controlFactory(robot, OcrUtil.ImageOcr());
+        controlFactory(robot, OcrUtil.ImageOcr(IMG_PATH));
     }
 
     /**
@@ -87,26 +91,48 @@ public class Click {
             // 开始游戏
             StartGame(robot, result);
             RobotTimer(robot, 1000 * 60);
-        }
-        if (text.contains("您的队伍仍存活")) {
+        } else if (text.contains("开始匹配")) {
+            RobotTimer(robot, 1000 * 90);
+        } else if (text.contains("距离比赛开始还有")) {
+            RobotTimer(robot, 1000 * 90);
+        } else if (text.contains("跳伞") && text.contains("生存")) {
+            robot.keyPress(VK_F);
+            robot.keyRelease(VK_F);
+            robot.delay(800);
+            RobotTimer(robot, 1000 * 90);
+        } else if (text.contains("生存")) {
+            RobotTimer(robot, 1000 * 120);
+        } else if (text.contains("您的队伍仍存活")) {
             // 观战
             LookGame(robot, result);
             RobotTimer(robot, 1000 * 90);
-        }
-        if (text.contains("祝下次好运")) {
+        } else if (text.contains("祝下次好运")) {
             // 结算重开
+            robot.keyPress(VK_ESCAPE);
+            robot.keyRelease(VK_ESCAPE);
+            robot.delay(800);
+            robot.keyPress(VK_ESCAPE);
+            robot.keyRelease(VK_ESCAPE);
+            robot.delay(800);
             StartGame(robot, result);
             RobotTimer(robot, 1000 * 90);
-        }
-        if (text.contains("服务器目前非常繁忙")) {
+        } else if (text.contains("服务器目前非常繁忙")) {
             // 重连重开
             ReloadGame(robot, result);
             RobotTimer(robot, 1000 * 90);
+        } else if (text.contains("比赛仍在继续中") && text.contains("重新连接")) {
+            ReStartGame(robot, result);
+            RobotTimer(robot, 1000 * 5);
+        } else {
+            // 防止没有自动观战
+            robot.keyPress(VK_PAGE_DOWN);
+            robot.keyRelease(VK_PAGE_DOWN);
+            robot.delay(800);
         }
-        if (text.contains("连接超时")) {
+        if (text.contains("连接超时") && text.contains("错误") ) {
             // 连接超时
             TimeOutGame(robot, result);
-            RobotTimer(robot, 1000 * 90);
+            RobotTimer(robot, 1000 * 10);
         }
     }
 

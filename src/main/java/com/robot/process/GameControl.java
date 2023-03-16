@@ -4,14 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.robot.entity.LineData;
 import com.robot.entity.Result;
 import com.robot.util.CommonUtil;
-import com.sun.prism.shader.Mask_TextureSuper_AlphaTest_Loader;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import static java.awt.event.KeyEvent.VK_PAGE_DOWN;
 
 /**
  * @author wql
@@ -33,24 +30,19 @@ public class GameControl {
     public static void StartGame(Robot robot, Result result) {
         Map<String, Integer> bounding = findBounding(result, "开始");
         // 点击准备
-//        CommonUtil.CommaClick(robot, 230, 965);
         CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
-        // 2.5秒按一次F
-//        robot.keyPress(VK_F);
-//        robot.keyRelease(VK_F);
-//        robot.delay(2500);
     }
 
     /**
      * 游戏重开控制
      *
-     * @param robot robot
-     * @param gameX gameX
-     * @param gameY gameY
+     * @param robot  robot
+     * @param result result
      */
-    public static void ReStartGame(Robot robot, int gameX, int gameY) {
-        // 点击ESC 点击确定
-        // 调用开始游戏方法
+    public static void ReStartGame(Robot robot, Result result) {
+        Map<String, Integer> bounding = findBounding(result, "取消");
+        // 点击取消
+        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
     }
 
     /**
@@ -60,12 +52,9 @@ public class GameControl {
      * @param result result
      */
     public static void LookGame(Robot robot, Result result) {
+        Map<String, Integer> bounding = findBounding(result, "观战");
         // 点击观战
-//        CommonUtil.CommaClick(robot, look.get("X"), look.get("Y"));
-        // 2.5秒按一次pagedown
-        robot.keyPress(VK_PAGE_DOWN);
-        robot.keyRelease(VK_PAGE_DOWN);
-        robot.delay(2500);
+        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
     }
 
     /**
@@ -76,6 +65,9 @@ public class GameControl {
      */
     public static void TimeOutGame(Robot robot, Result result) {
         // 点击确定
+        Map<String, Integer> bounding = findBounding(result, "确定");
+        // 点击观战
+        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
     }
 
     /**

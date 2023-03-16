@@ -1,5 +1,8 @@
 package com.robot.util;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.img.ImgUtil;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -7,8 +10,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.File;
+import java.io.*;
 
 import static java.awt.event.KeyEvent.VK_ALT;
 import static java.awt.event.KeyEvent.VK_TAB;
@@ -63,19 +65,80 @@ public class CommonUtil {
         return null;
     }
 
-    public static void saveImageFromClipboard() throws Exception {
+    public static String saveImageFromClipboard(String imgPath, String imgName) throws Exception {
         //获取粘贴板图片
         Image image = getImageFromClipboard();
-        File file = new File("C:\\Users\\Cody\\Desktop\\test\\aaaa.jpeg");
+        File file = new File(imgPath + "\\\\" + imgName);
+        File file2 = new File(imgPath + "\\\\" + "ocr.jpg");
         if (file.exists()) {
             file.delete();
         }
+        if (file2.exists()) {
+            file2.delete();
+        }
+        //转成jpg
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
         //转成png
-        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+//        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = bufferedImage.createGraphics();
         g.drawImage(image, null, null);
         ImageIO.write(bufferedImage, "jpg", file);
 //        ImageIO.write(bufferedImage, "png", file);
+        ImgUtil.compress(file, file2, 0.5f);
+        return file2Base64(file2);
+//        System.out.println((s.length() * 0.75 / 1024 / 1024));
+    }
+
+    public static String file2Base64(File file) {
+        if (file == null) {
+            return null;
+        }
+        String base64 = null;
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream(file);
+            byte[] buff = new byte[fin.available()];
+            fin.read(buff);
+            base64 = Base64.encode(buff);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fin != null) {
+                try {
+                    fin.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return base64;
+    }
+
+    public static File base64ToFile(String base64) {
+        if (base64 == null || "".equals(base64)) {
+            return null;
+        }
+        byte[] buff = Base64.decode(base64);
+        File file = null;
+        FileOutputStream fout = null;
+        try {
+            file = File.createTempFile("tmp", null);
+            fout = new FileOutputStream(file);
+            fout.write(buff);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fout != null) {
+                try {
+                    fout.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return file;
     }
 
     /**
