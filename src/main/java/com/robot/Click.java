@@ -48,7 +48,7 @@ public class Click {
 
     private static void placeComponents(JPanel panel) {
         panel.setLayout(new GridLayout(1, 1, 10, 10));
-        JTextField imgPath = new JTextField("C:\\Users\\Administrator\\Desktop\\test", 5);
+        JTextField imgPath = new JTextField(5);
         panel.add(imgPath);
         JButton start = new JButton("开始");
         IMG_PATH = imgPath.getText();
@@ -110,12 +110,11 @@ public class Click {
             // 结算重开
             robot.keyPress(VK_ESCAPE);
             robot.keyRelease(VK_ESCAPE);
-            robot.delay(800);
+            robot.delay(1000);
             robot.keyPress(VK_ESCAPE);
             robot.keyRelease(VK_ESCAPE);
-            robot.delay(800);
-            StartGame(robot, result);
-            RobotTimer(robot, 1000 * 90);
+            robot.delay(1000);
+            RobotTimer(robot, 1000 * 3);
         } else if (text.contains("服务器目前非常繁忙")) {
             // 重连重开
             ReloadGame(robot, result);
@@ -129,7 +128,7 @@ public class Click {
             robot.keyRelease(VK_PAGE_DOWN);
             robot.delay(800);
         }
-        if (text.contains("连接超时") && text.contains("错误") ) {
+        if (text.contains("连接超时") && text.contains("错误")) {
             // 连接超时
             TimeOutGame(robot, result);
             RobotTimer(robot, 1000 * 10);
