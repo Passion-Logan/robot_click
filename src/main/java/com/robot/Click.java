@@ -4,6 +4,11 @@ import cn.hutool.json.JSONUtil;
 import com.robot.entity.Result;
 import com.robot.util.CommonUtil;
 import com.robot.util.OcrUtil;
+import org.sikuli.script.Button;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Key;
+import org.sikuli.script.Match;
+import org.sikuli.script.Screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +33,31 @@ public class Click {
     static String IMG_PATH;
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Click::RobotBody);
+//        SwingUtilities.invokeLater(Click::RobotBody);
+
+        try {
+            baiduSearch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public static void baiduSearch() throws InterruptedException, FindFailed {
+        Screen screen = new Screen();
+        screen.wait("C:\\Users\\Administrator\\Desktop\\test\\11.png", 100);
+//        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\test.jpg");
+        //获取某个图片在屏幕上的位置
+        Match match = screen.find("C:\\Users\\Administrator\\Desktop\\test\\11.png");
+        System.out.println(match.getX() + " " +  match.getY() + "    " + match.getH() + " " + match.getW());
+//        screen.mouseMove(match.getX(), match.getY());
+        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\11.png");
+
+//        screen.mouseDown(Button.RIGHT);
+//        screen.mouseUp();
+    }
+
+
+
 
     public static void RobotBody() {
         JFrame.setDefaultLookAndFeelDecorated(true);
