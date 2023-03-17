@@ -2,6 +2,7 @@ package com.robot;
 
 import cn.hutool.json.JSONUtil;
 import com.robot.entity.Result;
+import com.robot.util.CommonUtil;
 import com.robot.util.OcrUtil;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class Click {
 
     private static void placeComponents(JPanel panel) {
         panel.setLayout(new GridLayout(1, 1, 10, 10));
-        JTextField imgPath = new JTextField(5);
+        JTextField imgPath = new JTextField("C:\\Users\\Cody\\Desktop\\robot",5);
         panel.add(imgPath);
         JButton start = new JButton("开始");
         IMG_PATH = imgPath.getText();
@@ -63,7 +64,9 @@ public class Click {
         try {
             Robot robot = new Robot();
             Thread.sleep(3000);
-            RobotMain(robot);
+//            CommonUtil.TabClick(robot);
+            StartGame(robot, null);
+//            RobotMain(robot);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,6 +79,7 @@ public class Click {
      */
     public static void RobotMain(Robot robot) {
         controlFactory(robot, OcrUtil.ImageOcr(IMG_PATH));
+//        OcrUtil.ImageOcr(IMG_PATH);
     }
 
     /**
@@ -90,7 +94,7 @@ public class Click {
         if (text.contains("开始游戏")) {
             // 开始游戏
             StartGame(robot, result);
-            RobotTimer(robot, 1000 * 60);
+//            RobotTimer(robot, 1000 * 60);
         } else if (text.contains("开始匹配")) {
             RobotTimer(robot, 1000 * 90);
         } else if (text.contains("距离比赛开始还有")) {

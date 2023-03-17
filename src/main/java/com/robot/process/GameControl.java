@@ -28,9 +28,10 @@ public class GameControl {
      * @param robot robot
      */
     public static void StartGame(Robot robot, Result result) {
-        Map<String, Integer> bounding = findBounding(result, "开始");
+//        Map<String, Integer> bounding = findBounding(result, "开始");
         // 点击准备
-        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
+//        CommonUtil.CommaClick(robot, bounding.get("x"), bounding.get("y"));
+        CommonUtil.CommaClick(robot, 231, 993);
     }
 
     /**

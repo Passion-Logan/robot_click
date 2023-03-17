@@ -24,7 +24,6 @@ public class OcrUtil {
             robot.keyPress(VK_PRINTSCREEN);
             robot.keyRelease(VK_PRINTSCREEN);
             robot.delay(800);
-            Thread.sleep(1000);
             // 获取截图
             String base64 = CommonUtil.saveImageFromClipboard(imgPath, "temp.jpg");
             // 图片识别
