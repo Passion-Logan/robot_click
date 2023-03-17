@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.robot.entity.Result;
 import com.robot.util.CommonUtil;
 import com.robot.util.OcrUtil;
+import org.sikuli.hotkey.Keys;
 import org.sikuli.script.Button;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Key;
@@ -44,13 +45,28 @@ public class Click {
 
     public static void baiduSearch() throws InterruptedException, FindFailed {
         Screen screen = new Screen();
-        screen.wait("C:\\Users\\Administrator\\Desktop\\test\\11.png", 100);
+//        screen.wait("C:\\Users\\Administrator\\Desktop\\test\\11.png", 100);
 //        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\test.jpg");
         //获取某个图片在屏幕上的位置
-        Match match = screen.find("C:\\Users\\Administrator\\Desktop\\test\\11.png");
-        System.out.println(match.getX() + " " +  match.getY() + "    " + match.getH() + " " + match.getW());
+//        Match match = screen.find("C:\\Users\\Administrator\\Desktop\\test\\11.png");
+//        System.out.println(match.getX() + " " +  match.getY() + "    " + match.getH() + " " + match.getW());
 //        screen.mouseMove(match.getX(), match.getY());
-        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\11.png");
+//        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\11.png");
+
+        screen.wait("C:\\Users\\Administrator\\Desktop\\test\\22.png", 100);
+        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\22.png");
+        screen.click();
+        screen.type("f");
+        screen.type(Keys.ENTER);
+        screen.type(Keys.ENTER);
+
+        screen.waitVanish("C:\\Users\\Administrator\\Desktop\\test\\22.png");
+
+        screen.wait("C:\\Users\\Administrator\\Desktop\\test\\33.png", 100);
+        screen.hover("C:\\Users\\Administrator\\Desktop\\test\\33.png");
+        screen.rightClick();
+
+        baiduSearch();
 
 //        screen.mouseDown(Button.RIGHT);
 //        screen.mouseUp();
