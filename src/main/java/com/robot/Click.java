@@ -34,7 +34,6 @@ public class Click {
     }
 
     private void RobotBody() {
-//        JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Robot");
         frame.setSize(200, 100);
         frame.setLocation(SCREEN_W / 2 - 100, SCREEN_H / 2 - 50);
@@ -122,14 +121,5 @@ public class Click {
 //            RobotTimer(robot, 1000 * 10);
 //        }
     }
-
-//    private static void RobotTimer(Robot robot, long sleepInt) {
-//        try {
-//            Thread.sleep(sleepInt);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        RobotMain(robot);
-//    }
 
 }
