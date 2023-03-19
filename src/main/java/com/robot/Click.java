@@ -1,6 +1,7 @@
 package com.robot;
 
 import cn.hutool.core.io.resource.ClassPathResource;
+import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
 import javax.swing.*;
@@ -64,23 +65,23 @@ public class Click {
         }
         try {
             // 开始游戏
-            screen.wait(new ClassPathResource("img/start.png").getAbsolutePath(), 100);
-            screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
+            Match start = screen.find(new ClassPathResource("img/start.png").getAbsolutePath());
+            System.out.println(123);
+            Match jump = screen.find(new ClassPathResource("img/jump.png").getAbsolutePath());
+            System.out.println(456);
+//            screen.wait(new ClassPathResource("img/start.png").getAbsolutePath(), 100);
+//            screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
 //            Thread.sleep(2000);
 
-            System.out.println(123);
+//            screen.wait(new ClassPathResource("img/jump.png").getAbsolutePath(), 100);
+//            screen.hover(new ClassPathResource("img/jump.png").getAbsolutePath());
 
-            screen.wait(new ClassPathResource("img/jump.png").getAbsolutePath(), 100);
-            screen.hover(new ClassPathResource("img/jump.png").getAbsolutePath());
+//            screen.type("f");
 
-            screen.type("f");
-
-            System.out.println(456);
-
-//            controlFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
+
+        controlFactory();
 
 //        Result result = JSONUtil.toBean(text, Result.class);
 //        System.out.println(result);
