@@ -66,8 +66,18 @@ public class Click {
             // 开始游戏
             screen.wait(new ClassPathResource("img/start.png").getAbsolutePath(), 100);
             screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
-            Thread.sleep(2000);
-            controlFactory();
+//            Thread.sleep(2000);
+
+            System.out.println(123);
+
+            screen.wait(new ClassPathResource("img/jump.png").getAbsolutePath(), 100);
+            screen.hover(new ClassPathResource("img/jump.png").getAbsolutePath());
+
+            screen.type("f");
+
+            System.out.println(456);
+
+//            controlFactory();
         } catch (Exception e) {
             e.printStackTrace();
         }
