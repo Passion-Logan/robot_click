@@ -1,12 +1,15 @@
 package com.robot;
 
 import cn.hutool.core.io.resource.ClassPathResource;
+import org.sikuli.hotkey.Keys;
+import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * main
@@ -54,11 +57,6 @@ public class Click {
         panel.add(start);
     }
 
-    public Object test() {
-        System.out.println(123);
-        return null;
-    }
-
     /**
      * 识别操作步骤
      */
@@ -69,78 +67,70 @@ public class Click {
         }
 
         try {
-//            Match exists = screen.exists("C:\\Users\\Administrator\\Desktop\\test\\22.png", 5);
-//            if (!Objects.isNull(exists)) {
-//                System.out.println(exists.getX());
-//            }
-//            System.out.println(123);
-
             // 开始游戏
-            screen.wait(new ClassPathResource("img/22.png").getAbsolutePath(), 100);
-//            Match match = screen.find(new ClassPathResource("img/22.png").getAbsolutePath());
-//            System.out.println(match.getX() + " " + match.getY());
-            screen.hover(new ClassPathResource("img/22.png").getAbsolutePath());
-//            Thread.sleep(2000);
-
-//            screen.wait(new ClassPathResource("img/jump.png").getAbsolutePath(), 100);
-//            screen.hover(new ClassPathResource("img/jump.png").getAbsolutePath());
-
-//            screen.type("f");
-
+            Match start = screen.exists(new ClassPathResource("img/start.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(start)) {
+                screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
+                screen.click();
+            }
+            // 开始匹配
+            Match startMatch = screen.exists(new ClassPathResource("img/startMatch.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(startMatch)) {
+                Thread.sleep(1000 * 65);
+            }
+            // 马上开始
+            Match nowStart = screen.exists(new ClassPathResource("img/nowStart.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(nowStart)) {
+                Thread.sleep(1000 * 30);
+            }
+            // 跳伞
+            Match jump = screen.exists(new ClassPathResource("img/jump.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(jump)) {
+                screen.type("f");
+                Thread.sleep(1000 * 60);
+            }
+            // 观战
+            Match look = screen.exists(new ClassPathResource("img/look2.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(look)) {
+                screen.hover(new ClassPathResource("img/look.png").getAbsolutePath());
+                screen.click();
+                Thread.sleep(1000 * 60);
+            }
+            // 队伍排名
+            Match teamRank = screen.exists(new ClassPathResource("img/teamRank.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(teamRank)) {
+                screen.hover(new ClassPathResource("img/toHome.png").getAbsolutePath());
+                screen.click();
+                Thread.sleep(1000 * 5);
+            }
+            // 确认离开
+            Match returnGame = screen.exists(new ClassPathResource("img/returnGame.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(returnGame)) {
+                screen.hover(new ClassPathResource("img/config.png").getAbsolutePath());
+                screen.click();
+                Thread.sleep(1000 * 3);
+            }
+            // 重新开始
+            Match reStart = screen.exists(new ClassPathResource("img/reStart.png").getAbsolutePath(), 5);
+            if (!Objects.isNull(reStart)) {
+                screen.type(Keys.ESC);
+                screen.type(Keys.ESC);
+                Thread.sleep(1000 * 2);
+            }
+            // 重新连接
+            Match reload = screen.exists(new ClassPathResource("img/reload.png").getAbsolutePath(), 2);
+            if (!Objects.isNull(reload)) {
+                screen.hover(new ClassPathResource("img/cancel.png").getAbsolutePath());
+                screen.click();
+                Thread.sleep(1000 * 2);
+            }
+            // todo 连接超时
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        controlFactory();
-
-//        Result result = JSONUtil.toBean(text, Result.class);
-//        System.out.println(result);
-//        if (text.contains("开始游戏")) {
-//            // 开始游戏
-//            StartGame(robot, result);
-////            RobotTimer(robot, 1000 * 60);
-//        } else if (text.contains("开始匹配")) {
-//            RobotTimer(robot, 1000 * 90);
-//        } else if (text.contains("距离比赛开始还有")) {
-//            RobotTimer(robot, 1000 * 90);
-//        } else if (text.contains("跳伞") && text.contains("生存")) {
-//            robot.keyPress(VK_F);
-//            robot.keyRelease(VK_F);
-//            robot.delay(800);
-//            RobotTimer(robot, 1000 * 90);
-//        } else if (text.contains("生存")) {
-//            RobotTimer(robot, 1000 * 120);
-//        } else if (text.contains("您的队伍仍存活")) {
-//            // 观战
-//            LookGame(robot, result);
-//            RobotTimer(robot, 1000 * 90);
-//        } else if (text.contains("祝下次好运")) {
-//            // 结算重开
-//            robot.keyPress(VK_ESCAPE);
-//            robot.keyRelease(VK_ESCAPE);
-//            robot.delay(1000);
-//            robot.keyPress(VK_ESCAPE);
-//            robot.keyRelease(VK_ESCAPE);
-//            robot.delay(1000);
-//            RobotTimer(robot, 1000 * 3);
-//        } else if (text.contains("服务器目前非常繁忙")) {
-//            // 重连重开
-//            ReloadGame(robot, result);
-//            RobotTimer(robot, 1000 * 90);
-//        } else if (text.contains("比赛仍在继续中") && text.contains("重新连接")) {
-//            ReStartGame(robot, result);
-//            RobotTimer(robot, 1000 * 5);
-//        } else {
-//            // 防止没有自动观战
-//            robot.keyPress(VK_PAGE_DOWN);
-//            robot.keyRelease(VK_PAGE_DOWN);
-//            robot.delay(800);
-//        }
-//        if (text.contains("连接超时") && text.contains("错误")) {
-//            // 连接超时
-//            TimeOutGame(robot, result);
-//            RobotTimer(robot, 1000 * 10);
-//        }
+        // 防止没有观战
+        screen.type(Keys.PAGE_DOWN);
+        controlFactory();
     }
 
 }
