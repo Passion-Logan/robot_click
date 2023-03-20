@@ -1,7 +1,6 @@
 package com.robot;
 
 import cn.hutool.core.io.resource.ClassPathResource;
-import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
 import javax.swing.*;
@@ -55,6 +54,11 @@ public class Click {
         panel.add(start);
     }
 
+    public Object test() {
+        System.out.println(123);
+        return null;
+    }
+
     /**
      * 识别操作步骤
      */
@@ -63,14 +67,19 @@ public class Click {
         if (dur.toMinutes() > 420) {
             System.exit(0);
         }
+
         try {
+//            Match exists = screen.exists("C:\\Users\\Administrator\\Desktop\\test\\22.png", 5);
+//            if (!Objects.isNull(exists)) {
+//                System.out.println(exists.getX());
+//            }
+//            System.out.println(123);
+
             // 开始游戏
-            Match start = screen.find(new ClassPathResource("img/start.png").getAbsolutePath());
-            System.out.println(123);
-            Match jump = screen.find(new ClassPathResource("img/jump.png").getAbsolutePath());
-            System.out.println(456);
-//            screen.wait(new ClassPathResource("img/start.png").getAbsolutePath(), 100);
-//            screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
+            screen.wait(new ClassPathResource("img/22.png").getAbsolutePath(), 100);
+//            Match match = screen.find(new ClassPathResource("img/22.png").getAbsolutePath());
+//            System.out.println(match.getX() + " " + match.getY());
+            screen.hover(new ClassPathResource("img/22.png").getAbsolutePath());
 //            Thread.sleep(2000);
 
 //            screen.wait(new ClassPathResource("img/jump.png").getAbsolutePath(), 100);
@@ -78,10 +87,11 @@ public class Click {
 
 //            screen.type("f");
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        controlFactory();
+//        controlFactory();
 
 //        Result result = JSONUtil.toBean(text, Result.class);
 //        System.out.println(result);
