@@ -1,12 +1,15 @@
 package com.robot;
 
 import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.util.StrUtil;
 import org.sikuli.hotkey.Keys;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,10 +28,10 @@ public class Click {
 
     static int SCREEN_W = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     static int SCREEN_H = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
     static Screen screen = new Screen();
-
     static LocalDateTime startTime = LocalDateTime.now();
+    static Boolean flag = false;
+    static String globalPath = System.getProperty("user.dir");
 
     public static void main(String[] args) {
         Click click = new Click();
@@ -38,98 +41,129 @@ public class Click {
 
     private void RobotBody() {
         JFrame frame = new JFrame("Robot");
-        frame.setSize(200, 100);
-        frame.setLocation(SCREEN_W / 2 - 100, SCREEN_H / 2 - 50);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 100);
+        frame.setLocation(SCREEN_W / 2 - 200, SCREEN_H / 2 - 50);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Container container = frame.getContentPane();
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showMessageDialog(null, "点退出点退出!", "不听话", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         JPanel panel = new JPanel();
         placeComponents(panel);
         container.add(panel, BorderLayout.CENTER);
 
-        frame.pack();
         frame.setVisible(true);
     }
 
     public void placeComponents(JPanel panel) {
-        JButton start = new JButton("退出");
-        start.addActionListener(e -> System.exit(0));
+        JButton start = new JButton("开始");
+        start.addActionListener(e -> {
+            flag = true;
+            start.setEnabled(false);
+        });
         panel.add(start);
+        JButton exit = new JButton("退出");
+        exit.addActionListener(e -> System.exit(0));
+        panel.add(exit);
     }
 
     /**
      * 识别操作步骤
      */
     public void controlFactory() {
-        Duration dur = Duration.between(startTime, LocalDateTime.now());
-        if (dur.toMinutes() > 420) {
-            System.exit(0);
+        if (Objects.equals(flag, true)) {
+            Duration dur = Duration.between(startTime, LocalDateTime.now());
+            if (dur.toMinutes() > 420) {
+                System.exit(0);
+            }
+            try {
+                // 开始游戏
+                Match start = screen.exists(globalPath +  "\\img\\start.png", 5);
+                if (!Objects.isNull(start)) {
+                    screen.hover(globalPath +  "\\img\\start.png");
+                    screen.click();
+                }
+                // 开始匹配
+                Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", 4);
+                if (!Objects.isNull(startMatch)) {
+                    Thread.sleep(1000 * 65);
+                }
+                // 马上开始
+                Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", 4);
+                if (!Objects.isNull(nowStart)) {
+                    Thread.sleep(1000 * 30);
+                }
+                // 跳伞
+                Match jump = screen.exists(globalPath + "\\img\\jump.png", 4);
+                if (!Objects.isNull(jump)) {
+                    screen.type("f");
+                    Thread.sleep(1000 * 60);
+                }
+                // 观战
+                Match look = screen.exists(globalPath + "\\img\\look2.png", 4);
+                if (!Objects.isNull(look)) {
+                    screen.hover(globalPath + "\\img\\look.png");
+                    screen.click();
+                    Thread.sleep(1000 * 60);
+                }
+                // 队伍排名
+                Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", 4);
+                if (!Objects.isNull(teamRank)) {
+                    screen.hover(globalPath + "\\img\\toHome.png");
+                    screen.click();
+                    Thread.sleep(1000 * 5);
+                }
+                // 确认离开
+                Match returnGame = screen.exists(globalPath + "\\img\\returnGame.png", 4);
+                if (!Objects.isNull(returnGame)) {
+                    screen.hover(globalPath + "\\img\\config.png");
+                    screen.click();
+                    Thread.sleep(1000 * 3);
+                }
+                // 重新开始
+                Match reStart = screen.exists(globalPath + "\\img\\reStart.png", 4);
+                if (!Objects.isNull(reStart)) {
+                    screen.type(Keys.ESC);
+                    screen.type(Keys.ESC);
+                    Thread.sleep(1000 * 2);
+                }
+                // 吃鸡
+                Match first = screen.exists(globalPath + "\\img\\first.png", 4);
+                if (!Objects.isNull(first)) {
+                    screen.type(Keys.ESC);
+                    screen.type(Keys.ESC);
+                    Thread.sleep(1000 * 2);
+                }
+                // 重新连接
+                Match reload = screen.exists(globalPath + "\\img\\reload.png", 2);
+                if (!Objects.isNull(reload)) {
+                    screen.hover(globalPath + "\\img\\cancel.png");
+                    screen.click();
+                    Thread.sleep(1000 * 2);
+                }
+                // 连接超时
+                Match error = screen.exists(globalPath + "\\img\\error.png", 2);
+                if (!Objects.isNull(error)) {
+                    screen.hover(globalPath + "\\img\\ok.png");
+                    screen.click();
+                    Thread.sleep(1000 * 2);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // 防止没有观战
+//            screen.type(Keys.PAGE_DOWN);
         }
-
         try {
-            // 开始游戏
-            Match start = screen.exists(new ClassPathResource("img/start.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(start)) {
-                screen.hover(new ClassPathResource("img/start.png").getAbsolutePath());
-                screen.click();
-            }
-            // 开始匹配
-            Match startMatch = screen.exists(new ClassPathResource("img/startMatch.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(startMatch)) {
-                Thread.sleep(1000 * 65);
-            }
-            // 马上开始
-            Match nowStart = screen.exists(new ClassPathResource("img/nowStart.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(nowStart)) {
-                Thread.sleep(1000 * 30);
-            }
-            // 跳伞
-            Match jump = screen.exists(new ClassPathResource("img/jump.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(jump)) {
-                screen.type("f");
-                Thread.sleep(1000 * 60);
-            }
-            // 观战
-            Match look = screen.exists(new ClassPathResource("img/look2.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(look)) {
-                screen.hover(new ClassPathResource("img/look.png").getAbsolutePath());
-                screen.click();
-                Thread.sleep(1000 * 60);
-            }
-            // 队伍排名
-            Match teamRank = screen.exists(new ClassPathResource("img/teamRank.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(teamRank)) {
-                screen.hover(new ClassPathResource("img/toHome.png").getAbsolutePath());
-                screen.click();
-                Thread.sleep(1000 * 5);
-            }
-            // 确认离开
-            Match returnGame = screen.exists(new ClassPathResource("img/returnGame.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(returnGame)) {
-                screen.hover(new ClassPathResource("img/config.png").getAbsolutePath());
-                screen.click();
-                Thread.sleep(1000 * 3);
-            }
-            // 重新开始
-            Match reStart = screen.exists(new ClassPathResource("img/reStart.png").getAbsolutePath(), 5);
-            if (!Objects.isNull(reStart)) {
-                screen.type(Keys.ESC);
-                screen.type(Keys.ESC);
-                Thread.sleep(1000 * 2);
-            }
-            // 重新连接
-            Match reload = screen.exists(new ClassPathResource("img/reload.png").getAbsolutePath(), 2);
-            if (!Objects.isNull(reload)) {
-                screen.hover(new ClassPathResource("img/cancel.png").getAbsolutePath());
-                screen.click();
-                Thread.sleep(1000 * 2);
-            }
-            // todo 连接超时
-        } catch (Exception e) {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // 防止没有观战
-        screen.type(Keys.PAGE_DOWN);
         controlFactory();
     }
 
