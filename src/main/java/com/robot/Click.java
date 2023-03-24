@@ -157,7 +157,7 @@ public class Click {
                 e.printStackTrace();
             }
             // 防止没有观战
-//            screen.type(Keys.PAGE_DOWN);
+            screen.type(Keys.PAGE_DOWN);
         }
         try {
             Thread.sleep(1000);
