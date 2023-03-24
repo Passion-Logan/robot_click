@@ -147,7 +147,7 @@ public class Click {
                     Thread.sleep(1000 * 2);
                 }
                 // 连接超时
-                Match error = screen.exists(globalPath + "\\img\\error.png", 2);
+                Match error = screen.exists(globalPath + "\\img\\error2.png", 2);
                 if (!Objects.isNull(error)) {
                     screen.hover(globalPath + "\\img\\ok.png");
                     screen.click();
