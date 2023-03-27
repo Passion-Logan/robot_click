@@ -83,9 +83,9 @@ public class Click {
             }
             try {
                 // 开始游戏
-                Match start = screen.exists(globalPath +  "\\img\\start.png", 5);
+                Match start = screen.exists(globalPath + "\\img\\start.png", 5);
                 if (!Objects.isNull(start)) {
-                    screen.hover(globalPath +  "\\img\\start.png");
+                    screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
                 // 开始匹配
@@ -133,7 +133,7 @@ public class Click {
                     Thread.sleep(1000 * 2);
                 }
                 // 吃鸡
-                Match first = screen.exists(globalPath + "\\img\\first.png", 4);
+                Match first = screen.exists(globalPath + "\\img\\first2.png", 4);
                 if (!Objects.isNull(first)) {
                     screen.type(Keys.ESC);
                     screen.type(Keys.ESC);
