@@ -76,6 +76,7 @@ public class Click {
      * 识别操作步骤
      */
     public void controlFactory() {
+        int globalTimeout = 3;
         if (Objects.equals(flag, true)) {
             Duration dur = Duration.between(startTime, LocalDateTime.now());
             if (dur.toMinutes() > 420) {
@@ -83,57 +84,57 @@ public class Click {
             }
             try {
                 // 开始游戏
-                Match start = screen.exists(globalPath + "\\img\\start.png", 5);
+                Match start = screen.exists(globalPath + "\\img\\start.png", globalTimeout);
                 if (!Objects.isNull(start)) {
                     screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
                 // 开始匹配
-                Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", 4);
+                Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
                 if (!Objects.isNull(startMatch)) {
                     Thread.sleep(1000 * 65);
                 }
                 // 马上开始
-                Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", 4);
+                Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
                 if (!Objects.isNull(nowStart)) {
                     Thread.sleep(1000 * 30);
                 }
                 // 跳伞
-                Match jump = screen.exists(globalPath + "\\img\\jump.png", 4);
+                Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
                 if (!Objects.isNull(jump)) {
                     screen.type("f");
                     Thread.sleep(1000 * 60);
                 }
                 // 观战
-                Match look = screen.exists(globalPath + "\\img\\look2.png", 4);
+                Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
                 if (!Objects.isNull(look)) {
                     screen.hover(globalPath + "\\img\\look.png");
                     screen.click();
                     Thread.sleep(1000 * 60);
                 }
                 // 队伍排名
-                Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", 4);
+                Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", globalTimeout);
                 if (!Objects.isNull(teamRank)) {
                     screen.hover(globalPath + "\\img\\toHome.png");
                     screen.click();
                     Thread.sleep(1000 * 5);
                 }
                 // 确认离开
-                Match returnGame = screen.exists(globalPath + "\\img\\returnGame.png", 4);
+                Match returnGame = screen.exists(globalPath + "\\img\\returnGame.png", globalTimeout);
                 if (!Objects.isNull(returnGame)) {
                     screen.hover(globalPath + "\\img\\config.png");
                     screen.click();
                     Thread.sleep(1000 * 3);
                 }
                 // 重新开始
-                Match reStart = screen.exists(globalPath + "\\img\\reStart.png", 4);
+                Match reStart = screen.exists(globalPath + "\\img\\reStart.png", globalTimeout);
                 if (!Objects.isNull(reStart)) {
                     screen.type(Keys.ESC);
                     screen.type(Keys.ESC);
                     Thread.sleep(1000 * 2);
                 }
                 // 吃鸡
-                Match first = screen.exists(globalPath + "\\img\\first2.png", 4);
+                Match first = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
                 if (!Objects.isNull(first)) {
                     screen.type(Keys.ESC);
                     screen.type(Keys.ESC);
@@ -146,10 +147,17 @@ public class Click {
                     screen.click();
                     Thread.sleep(1000 * 2);
                 }
-                // 连接超时
-                Match error = screen.exists(globalPath + "\\img\\error2.png", 2);
+                // 连接超时/与主机失去连接
+                Match error = screen.exists(globalPath + "\\img\\error.png", 2);
                 if (!Objects.isNull(error)) {
                     screen.hover(globalPath + "\\img\\ok.png");
+                    screen.click();
+                    Thread.sleep(1000 * 2);
+                }
+                // 服务器繁忙
+                Match busy = screen.exists(globalPath + "\\img\\busy.png", 2);
+                if (!Objects.isNull(busy)) {
+                    screen.hover(globalPath + "\\img\\reloadBtn.png");
                     screen.click();
                     Thread.sleep(1000 * 2);
                 }
