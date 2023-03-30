@@ -83,70 +83,70 @@ public class Click {
                 System.exit(0);
             }
             try {
-                // 开始游戏
-                Match start = screen.exists(globalPath + "\\img\\start.png", globalTimeout);
-                if (!Objects.isNull(start)) {
-                    screen.hover(globalPath + "\\img\\start.png");
-                    screen.click();
-                }
-                // 开始匹配
-                Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
-                if (!Objects.isNull(startMatch)) {
-                    Thread.sleep(1000 * 65);
-                }
-                // 马上开始
-                Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
-                if (!Objects.isNull(nowStart)) {
-                    Thread.sleep(1000 * 30);
-                }
-                // 跳伞
-                Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
-                if (!Objects.isNull(jump)) {
-                    screen.type("f");
-                    Thread.sleep(1000 * 60);
-                }
-                // 观战
-                Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
-                if (!Objects.isNull(look)) {
-                    screen.hover(globalPath + "\\img\\look.png");
-                    screen.click();
-                    Thread.sleep(1000 * 60);
-                }
-                // 队伍排名
-                Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", globalTimeout);
-                if (!Objects.isNull(teamRank)) {
-                    screen.hover(globalPath + "\\img\\toHome.png");
-                    screen.click();
-                    Thread.sleep(1000 * 5);
-                }
-                // 确认离开
-                Match returnGame = screen.exists(globalPath + "\\img\\returnGame.png", globalTimeout);
-                if (!Objects.isNull(returnGame)) {
-                    screen.hover(globalPath + "\\img\\config.png");
-                    screen.click();
-                    Thread.sleep(1000 * 3);
-                }
-                // 重新开始
-                Match reStart = screen.exists(globalPath + "\\img\\reStart.png", globalTimeout);
-                if (!Objects.isNull(reStart)) {
-                    screen.type(Keys.ESC);
-                    screen.type(Keys.ESC);
-                    Thread.sleep(1000 * 2);
-                }
-                // 吃鸡
-                Match first = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
-                if (!Objects.isNull(first)) {
-                    screen.type(Keys.ESC);
-                    screen.type(Keys.ESC);
-                    Thread.sleep(1000 * 2);
-                }
-                // 重新连接
-                Match reload = screen.exists(globalPath + "\\img\\reload.png", 2);
-                if (!Objects.isNull(reload)) {
-                    screen.hover(globalPath + "\\img\\cancel.png");
-                    screen.click();
-                    Thread.sleep(1000 * 2);
-                }
+//                // 开始游戏
+//                Match start = screen.exists(globalPath + "\\img\\start.png", globalTimeout);
+//                if (!Objects.isNull(start)) {
+//                    screen.hover(globalPath + "\\img\\start.png");
+//                    screen.click();
+//                }
+//                // 开始匹配
+//                Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
+//                if (!Objects.isNull(startMatch)) {
+//                    Thread.sleep(1000 * 65);
+//                }
+//                // 马上开始
+//                Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
+//                if (!Objects.isNull(nowStart)) {
+//                    Thread.sleep(1000 * 30);
+//                }
+//                // 跳伞
+//                Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
+//                if (!Objects.isNull(jump)) {
+//                    screen.type("f");
+//                    Thread.sleep(1000 * 60);
+//                }
+//                // 观战
+//                Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
+//                if (!Objects.isNull(look)) {
+//                    screen.hover(globalPath + "\\img\\look.png");
+//                    screen.click();
+//                    Thread.sleep(1000 * 60);
+//                }
+//                // 队伍排名
+//                Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", globalTimeout);
+//                if (!Objects.isNull(teamRank)) {
+//                    screen.hover(globalPath + "\\img\\toHome.png");
+//                    screen.click();
+//                    Thread.sleep(1000 * 5);
+//                }
+//                // 确认离开
+//                Match returnGame = screen.exists(globalPath + "\\img\\returnGame.png", globalTimeout);
+//                if (!Objects.isNull(returnGame)) {
+//                    screen.hover(globalPath + "\\img\\config.png");
+//                    screen.click();
+//                    Thread.sleep(1000 * 3);
+//                }
+//                // 重新开始
+//                Match reStart = screen.exists(globalPath + "\\img\\reStart.png", globalTimeout);
+//                if (!Objects.isNull(reStart)) {
+//                    screen.type(Keys.ESC);
+//                    screen.type(Keys.ESC);
+//                    Thread.sleep(1000 * 2);
+//                }
+//                // 吃鸡
+//                Match first = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
+//                if (!Objects.isNull(first)) {
+//                    screen.type(Keys.ESC);
+//                    screen.type(Keys.ESC);
+//                    Thread.sleep(1000 * 2);
+//                }
+//                // 重新连接
+//                Match reload = screen.exists(globalPath + "\\img\\reload.png", 2);
+//                if (!Objects.isNull(reload)) {
+//                    screen.hover(globalPath + "\\img\\cancel.png");
+//                    screen.click();
+//                    Thread.sleep(1000 * 2);
+//                }
                 // 连接超时/与主机失去连接
                 Match error = screen.exists(globalPath + "\\img\\error.png", 2);
                 if (!Objects.isNull(error)) {
@@ -155,12 +155,12 @@ public class Click {
                     Thread.sleep(1000 * 2);
                 }
                 // 服务器繁忙
-                Match busy = screen.exists(globalPath + "\\img\\busy.png", 2);
-                if (!Objects.isNull(busy)) {
-                    screen.hover(globalPath + "\\img\\reloadBtn.png");
-                    screen.click();
-                    Thread.sleep(1000 * 2);
-                }
+//                Match busy = screen.exists(globalPath + "\\img\\busy.png", 2);
+//                if (!Objects.isNull(busy)) {
+//                    screen.hover(globalPath + "\\img\\reloadBtn.png");
+//                    screen.click();
+//                    Thread.sleep(1000 * 2);
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
