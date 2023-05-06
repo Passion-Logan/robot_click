@@ -1,7 +1,5 @@
 package com.robot;
 
-import cn.hutool.core.io.resource.ClassPathResource;
-import cn.hutool.core.util.StrUtil;
 import org.sikuli.hotkey.Keys;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
@@ -10,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -173,6 +173,15 @@ public class Click {
             e.printStackTrace();
         }
         controlFactory();
+    }
+
+    public Click() {
+        try {
+            PrintStream print = new PrintStream("log.txt");
+            System.setOut(print);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
