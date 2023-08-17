@@ -1,6 +1,7 @@
 package com.robot;
 
 import org.sikuli.hotkey.Keys;
+import org.sikuli.script.Key;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
@@ -106,6 +107,12 @@ public class Click {
                 if (Objects.nonNull(jump)) {
                     jumpFlag = true;
                     screen.type("f");
+                    // 加速下落
+                    screen.keyDown(Key.SHIFT);
+                    screen.keyDown("w");
+                    Thread.sleep(1000 * 20);
+                    screen.keyUp(Key.SHIFT);
+                    screen.keyUp("w");
                     Thread.sleep(1000 * 90);
                 }
                 // 判断是否打开工具箱
