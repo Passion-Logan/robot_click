@@ -32,6 +32,8 @@ public class Click {
     static LocalDateTime startTime = LocalDateTime.now();
     static Boolean flag = false;
     static String globalPath = System.getProperty("user.dir");
+    static boolean jumpFlag = false;
+    static boolean toolFlag = false;
 
     public static void main(String[] args) {
         Click click = new Click();
@@ -102,12 +104,15 @@ public class Click {
                 // 跳伞
                 Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
                 if (Objects.nonNull(jump)) {
+                    jumpFlag = true;
                     screen.type("f");
-                    Thread.sleep(1000 * 30);
+                    Thread.sleep(1000 * 90);
+                }
+                // 判断是否打开工具箱
+                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, false)) {
+                    screen.type(Keys.TAB);
                 }
                 // 打开工具箱
-                screen.type(Keys.TAB);
-                boolean tabFlag = false;
                 Match tool = screen.exists(globalPath + "\\img\\tool.png", globalTimeout);
                 if (Objects.nonNull(tool)) {
                     screen.hover(globalPath + "\\img\\tool.png");
@@ -124,14 +129,15 @@ public class Click {
                         screen.hover(globalPath + "\\img\\tool_ok.png");
                         screen.click();
                         Thread.sleep(1000 * 5);
-                        // 去除tab、趴下
                         screen.type("z");
+                        toolFlag = true;
                     }
-                    screen.type(Keys.ESC);
-                    tabFlag = true;
                 }
-                if (Objects.equals(tabFlag, false)) {
-                    screen.type(Keys.ESC);
+                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
+                    screen.type(Keys.TAB);
+                    // 重置按钮
+                    jumpFlag = false;
+                    toolFlag = false;
                 }
                 // 观战
                 Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
