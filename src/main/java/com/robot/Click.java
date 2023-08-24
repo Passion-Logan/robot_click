@@ -38,6 +38,7 @@ public class Click {
 
     public static void main(String[] args) {
         Click click = new Click();
+        // test
         SwingUtilities.invokeLater(click::RobotBody);
         click.controlFactory();
     }
