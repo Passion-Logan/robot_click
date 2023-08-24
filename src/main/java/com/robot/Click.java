@@ -79,7 +79,7 @@ public class Click {
      * 识别操作步骤
      */
     public void controlFactory() {
-        int globalTimeout = 2;
+        int globalTimeout = 1;
         if (Objects.equals(flag, true)) {
             Duration dur = Duration.between(startTime, LocalDateTime.now());
             if (dur.toMinutes() > 420) {
@@ -110,9 +110,11 @@ public class Click {
                     // 加速下落
                     screen.keyDown(Key.SHIFT);
                     screen.keyDown("w");
-                    Thread.sleep(1000 * 20);
+                    Thread.sleep(1000 * 40);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
+                    // 窗口最大化
+                    screen.type(Key.UP, Key.WIN);
                     Thread.sleep(1000 * 90);
                 }
                 // 判断是否打开工具箱
@@ -127,13 +129,13 @@ public class Click {
                     Thread.sleep(1000);
                 }
                 // 使用工具箱
-                Match toolInfo = screen.exists(globalPath + "\\img\\tool_info.png", globalTimeout);
+                Match toolInfo = screen.exists(globalPath + "\\img\\tool_info3.png", globalTimeout);
                 if (Objects.nonNull(toolInfo)) {
-                    screen.hover(globalPath + "\\img\\tool_info.png");
+                    screen.hover(globalPath + "\\img\\tool_info3.png");
                     screen.click();
-                    Match toolOk = screen.exists(globalPath + "\\img\\tool_ok.png", globalTimeout);
+                    Match toolOk = screen.exists(globalPath + "\\img\\tool_ok2.png", globalTimeout);
                     if (Objects.nonNull(toolOk)) {
-                        screen.hover(globalPath + "\\img\\tool_ok.png");
+                        screen.hover(globalPath + "\\img\\tool_ok2.png");
                         screen.click();
                         Thread.sleep(1000 * 5);
                         screen.type("z");
@@ -174,6 +176,18 @@ public class Click {
                     screen.type(Keys.ESC);
                     Thread.sleep(1000 * 2);
                 }
+                Match reStart2 = screen.exists(globalPath + "\\img\\reStart2.png", globalTimeout);
+                if (Objects.nonNull(reStart2)) {
+                    screen.type(Keys.ESC);
+                    screen.type(Keys.ESC);
+                    Thread.sleep(1000 * 2);
+                }
+                Match reStart3 = screen.exists(globalPath + "\\img\\reStart3.png", globalTimeout);
+                if (Objects.nonNull(reStart3)) {
+                    screen.type(Keys.ESC);
+                    screen.type(Keys.ESC);
+                    Thread.sleep(1000 * 2);
+                }
                 // 吃鸡
                 Match first = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
                 if (Objects.nonNull(first)) {
@@ -206,7 +220,7 @@ public class Click {
                 e.printStackTrace();
             }
             // 防止没有观战
-            screen.type(Keys.PAGE_DOWN);
+//            screen.type(Keys.PAGE_DOWN);
         }
         try {
             Thread.sleep(1000);
