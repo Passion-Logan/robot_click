@@ -98,6 +98,9 @@ public class Click {
                 // 开始游戏
                 Match start = screen.exists(globalPath + "\\img\\start.png", globalTimeout);
                 if (Objects.nonNull(start)) {
+                    screen.doubleClick();
+                    // 窗口最大化
+                    screen.type(Key.UP, Key.WIN);
                     screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
@@ -119,7 +122,7 @@ public class Click {
                     // 加速下落
                     screen.keyDown(Key.SHIFT);
                     screen.keyDown("w");
-                    Thread.sleep(1000 * 45);
+                    Thread.sleep(1000 * 48);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
                 }
@@ -128,11 +131,11 @@ public class Click {
                     screen.type(Keys.TAB);
                     Thread.sleep(100);
                     // 打开工具箱 todo 换个坐标 工具箱的坐标
-                    CommaRightClick(robot, 12, 123);
+                    CommaRightClick(robot, 475, 149);
                     // 移动到飞机上 点左键 todo 换个坐标 飞机的坐标
-                    CommaClick(robot, 12, 123);
+                    CommaClick(robot, 957, 358);
                     // 左键点OK todo 换个坐标 ok的坐标
-                    CommaClick(robot, 12, 123);
+                    CommaClick(robot, 949, 866);
                     Thread.sleep(1000 * 5);
                     screen.type("z");
                     toolFlag = true;
@@ -152,7 +155,8 @@ public class Click {
                 }
                 // 队伍排名
                 Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", globalTimeout);
-                if (Objects.nonNull(teamRank)) {
+                Match toHome = screen.exists(globalPath + "\\img\\toHome.png", globalTimeout);
+                if (Objects.nonNull(teamRank) || Objects.nonNull(toHome)) {
                     screen.hover(globalPath + "\\img\\toHome.png");
                     screen.click();
                     Thread.sleep(1000 * 5);
@@ -184,8 +188,9 @@ public class Click {
                     Thread.sleep(1000 * 2);
                 }
                 // 吃鸡
-                Match first = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
-                if (Objects.nonNull(first)) {
+                Match first = screen.exists(globalPath + "\\img\\first.png", globalTimeout);
+                Match first2 = screen.exists(globalPath + "\\img\\first2.png", globalTimeout);
+                if (Objects.nonNull(first) || Objects.nonNull(first2)) {
                     screen.type(Keys.ESC);
                     screen.type(Keys.ESC);
                     Thread.sleep(1000 * 2);
