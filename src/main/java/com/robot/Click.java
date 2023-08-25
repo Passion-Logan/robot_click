@@ -98,9 +98,6 @@ public class Click {
                 // 开始游戏
                 Match start = screen.exists(globalPath + "\\img\\start.png", globalTimeout);
                 if (Objects.nonNull(start)) {
-                    screen.doubleClick();
-                    // 窗口最大化
-                    screen.type(Key.UP, Key.WIN);
                     screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
