@@ -142,7 +142,7 @@ public class CommonUtil {
     }
 
     /**
-     * 点击操作
+     * 鼠标左键点击操作
      *
      * @param robot robot
      * @param x     x
@@ -152,7 +152,21 @@ public class CommonUtil {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(800);
+        robot.delay(100);
+    }
+
+    /**
+     * 鼠标右键点击操作
+     *
+     * @param robot robot
+     * @param x     x
+     * @param y     y
+     */
+    public static void CommaRightClick(Robot robot, int x, int y) {
+        robot.mouseMove(x, y);
+        robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+        robot.delay(100);
     }
 
     /**

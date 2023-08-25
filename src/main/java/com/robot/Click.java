@@ -15,6 +15,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static com.robot.util.CommonUtil.CommaClick;
+import static com.robot.util.CommonUtil.CommaRightClick;
+
 /**
  * main
  *
@@ -36,13 +39,15 @@ public class Click {
     static boolean jumpFlag = false;
     static boolean toolFlag = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AWTException {
         Click click = new Click();
         // test
         SwingUtilities.invokeLater(click::RobotBody);
-        click.controlFactory();
+        Robot robot = new Robot();
+        click.controlFactory(robot);
     }
 
+    //<editor-fold desc="界面设置">
     private void RobotBody() {
         JFrame frame = new JFrame("Robot");
         frame.setSize(400, 100);
@@ -75,11 +80,14 @@ public class Click {
         exit.addActionListener(e -> System.exit(0));
         panel.add(exit);
     }
+    //</editor-fold>
 
     /**
      * 识别操作步骤
+     *
+     * @param robot robot
      */
-    public void controlFactory() {
+    public void controlFactory(Robot robot) {
         int globalTimeout = 1;
         if (Objects.equals(flag, true)) {
             Duration dur = Duration.between(startTime, LocalDateTime.now());
@@ -111,41 +119,27 @@ public class Click {
                     // 加速下落
                     screen.keyDown(Key.SHIFT);
                     screen.keyDown("w");
-                    Thread.sleep(1000 * 40);
+                    Thread.sleep(1000 * 45);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
-                    // 窗口最大化
-                    screen.type(Key.UP, Key.WIN);
-                    Thread.sleep(1000 * 90);
                 }
                 // 判断是否打开工具箱
                 if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, false)) {
                     screen.type(Keys.TAB);
+                    Thread.sleep(100);
+                    // 打开工具箱 todo 换个坐标 工具箱的坐标
+                    CommaRightClick(robot, 12, 123);
+                    // 移动到飞机上 点左键 todo 换个坐标 飞机的坐标
+                    CommaClick(robot, 12, 123);
+                    // 左键点OK todo 换个坐标 ok的坐标
+                    CommaClick(robot, 12, 123);
+                    Thread.sleep(1000 * 5);
+                    screen.type("z");
+                    toolFlag = true;
                 }
-                // 打开工具箱
-                Match tool = screen.exists(globalPath + "\\img\\tool.png", globalTimeout);
-                if (Objects.nonNull(tool)) {
-                    screen.hover(globalPath + "\\img\\tool.png");
-                    screen.rightClick();
-                    Thread.sleep(1000);
-                }
-                // 使用工具箱
-                Match toolInfo = screen.exists(globalPath + "\\img\\tool_info3.png", globalTimeout);
-                if (Objects.nonNull(toolInfo)) {
-                    screen.hover(globalPath + "\\img\\tool_info3.png");
-                    screen.click();
-                    Match toolOk = screen.exists(globalPath + "\\img\\tool_ok2.png", globalTimeout);
-                    if (Objects.nonNull(toolOk)) {
-                        screen.hover(globalPath + "\\img\\tool_ok2.png");
-                        screen.click();
-                        Thread.sleep(1000 * 5);
-                        screen.type("z");
-                        toolFlag = true;
-                    }
-                }
+                // 重置按钮
                 if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
                     screen.type(Keys.TAB);
-                    // 重置按钮
                     jumpFlag = false;
                     toolFlag = false;
                 }
@@ -221,14 +215,14 @@ public class Click {
                 e.printStackTrace();
             }
             // 防止没有观战
-//            screen.type(Keys.PAGE_DOWN);
+            screen.type(Keys.PAGE_DOWN);
         }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        controlFactory();
+        controlFactory(robot);
     }
 
     public Click() {
