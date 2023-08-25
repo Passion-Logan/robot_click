@@ -109,7 +109,7 @@ public class Click {
                 // 马上开始
                 Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
                 if (Objects.nonNull(nowStart)) {
-                    Thread.sleep(1000 * 30);
+                    Thread.sleep(1000 * 60);
                 }
                 // 跳伞
                 Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
