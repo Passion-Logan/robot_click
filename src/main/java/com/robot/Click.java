@@ -127,11 +127,11 @@ public class Click {
                 if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, false)) {
                     screen.type(Keys.TAB);
                     Thread.sleep(100);
-                    // 打开工具箱 todo 换个坐标 工具箱的坐标
+                    // 打开工具箱
                     CommaRightClick(robot, 475, 149);
-                    // 移动到飞机上 点左键 todo 换个坐标 飞机的坐标
+                    // 移动到飞机上 点左键
                     CommaClick(robot, 957, 358);
-                    // 左键点OK todo 换个坐标 ok的坐标
+                    // 左键点OK
                     CommaClick(robot, 949, 866);
                     Thread.sleep(1000 * 5);
                     screen.type("z");
@@ -140,6 +140,7 @@ public class Click {
                 // 重置按钮
                 if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
                     screen.type(Keys.TAB);
+                    screen.type("x");
                     jumpFlag = false;
                     toolFlag = false;
                 }
@@ -217,7 +218,7 @@ public class Click {
                 e.printStackTrace();
             }
             // 防止没有观战
-            screen.type(Keys.PAGE_DOWN);
+//            screen.type(Keys.PAGE_DOWN);
         }
         try {
             Thread.sleep(1000);
