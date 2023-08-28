@@ -88,6 +88,8 @@ public class Click {
      * @param robot robot
      */
     public void controlFactory(Robot robot) {
+        jumpFlag = false;
+        toolFlag = false;
         int globalTimeout = 1;
         if (Objects.equals(flag, true)) {
             Duration dur = Duration.between(startTime, LocalDateTime.now());
@@ -119,7 +121,7 @@ public class Click {
                     // 加速下落
                     screen.keyDown(Key.SHIFT);
                     screen.keyDown("w");
-                    Thread.sleep(1000 * 48);
+                    Thread.sleep(1000 * 50);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
                 }
@@ -141,8 +143,6 @@ public class Click {
                 if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
                     screen.type(Keys.TAB);
                     screen.type("x");
-                    jumpFlag = false;
-                    toolFlag = false;
                 }
                 // 观战
                 Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
