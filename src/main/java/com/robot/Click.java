@@ -121,7 +121,7 @@ public class Click {
                     // 加速下落
                     screen.keyDown(Key.SHIFT);
                     screen.keyDown("w");
-                    Thread.sleep(1000 * 50);
+                    Thread.sleep(1000 * 48);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
                 }
