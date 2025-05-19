@@ -106,12 +106,12 @@ public class Click {
                 // 开始匹配
                 Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
                 if (Objects.nonNull(startMatch)) {
-                    Thread.sleep(1000 * 65);
+                    Thread.sleep(1000 * 5);
                 }
                 // 马上开始
                 Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
                 if (Objects.nonNull(nowStart)) {
-                    Thread.sleep(1000 * 60);
+                    Thread.sleep(1000 * 5);
                 }
                 // 跳伞
                 Match jump = screen.exists(globalPath + "\\img\\jump.png", globalTimeout);
@@ -124,32 +124,33 @@ public class Click {
                     Thread.sleep(1000 * 48);
                     screen.keyUp(Key.SHIFT);
                     screen.keyUp("w");
+                    screen.type("z");
                 }
                 // 判断是否打开工具箱
-                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, false)) {
-                    screen.type(Keys.TAB);
-                    Thread.sleep(100);
-                    // 打开工具箱
-                    CommaRightClick(robot, 475, 149);
-                    // 移动到飞机上 点左键
-                    CommaClick(robot, 957, 358);
-                    // 左键点OK
-                    CommaClick(robot, 949, 866);
-                    Thread.sleep(1000 * 5);
-                    screen.type("z");
-                    toolFlag = true;
-                }
+//                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, false)) {
+//                    screen.type(Keys.TAB);
+//                    Thread.sleep(100);
+//                    // 打开工具箱
+//                    CommaRightClick(robot, 475, 149);
+//                    // 移动到飞机上 点左键
+//                    CommaClick(robot, 957, 358);
+//                    // 左键点OK
+//                    CommaClick(robot, 949, 866);
+//                    Thread.sleep(1000 * 5);
+//                    screen.type("z");
+//                    toolFlag = true;
+//                }
                 // 重置按钮
-                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
-                    screen.type(Keys.TAB);
-                    screen.type("x");
-                }
+//                if (Objects.equals(jumpFlag, true) && Objects.equals(toolFlag, true)) {
+//                    screen.type(Keys.TAB);
+//                    screen.type("x");
+//                }
                 // 观战
                 Match look = screen.exists(globalPath + "\\img\\look2.png", globalTimeout);
                 if (Objects.nonNull(look)) {
                     screen.hover(globalPath + "\\img\\look.png");
                     screen.click();
-                    Thread.sleep(1000 * 60);
+                    Thread.sleep(1000 * 30);
                 }
                 // 队伍排名
                 Match teamRank = screen.exists(globalPath + "\\img\\teamRank.png", globalTimeout);
@@ -218,7 +219,7 @@ public class Click {
                 e.printStackTrace();
             }
             // 防止没有观战
-//            screen.type(Keys.PAGE_DOWN);
+            screen.type(Keys.PAGE_DOWN);
         }
         try {
             Thread.sleep(1000);
