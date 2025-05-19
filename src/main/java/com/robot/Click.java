@@ -15,9 +15,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static com.robot.util.CommonUtil.CommaClick;
-import static com.robot.util.CommonUtil.CommaRightClick;
-
 /**
  * main
  *
@@ -34,17 +31,30 @@ public class Click {
     static int SCREEN_H = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     static Screen screen = new Screen();
     static LocalDateTime startTime = LocalDateTime.now();
-    static Boolean flag = false;
+
     static String globalPath = System.getProperty("user.dir");
     static boolean jumpFlag = false;
     static boolean toolFlag = false;
+    private boolean flag = false;
+
+    private Robot robot;
+
+    public Click() throws AWTException {
+        try {
+            PrintStream print = new PrintStream("log.txt");
+            this.robot = new Robot();
+            System.setOut(print);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws AWTException {
         Click click = new Click();
         // test
         SwingUtilities.invokeLater(click::RobotBody);
-        Robot robot = new Robot();
-        click.controlFactory(robot);
+//        Robot robot = new Robot();
+//        click.controlFactory(robot);
     }
 
     //<editor-fold desc="界面设置">
@@ -73,27 +83,44 @@ public class Click {
         JButton start = new JButton("开始");
         start.addActionListener(e -> {
             flag = true;
+//            this.controlFactory(robot);
             start.setEnabled(false);
+            startControlFactory(); // 调用 startControlFactory 方法
         });
         panel.add(start);
         JButton exit = new JButton("退出");
-        exit.addActionListener(e -> System.exit(0));
+        exit.addActionListener(e -> {
+            flag = false; // 设置 flag 为 false，结束循环
+            System.exit(0);
+        });
+        panel.add(exit);
         panel.add(exit);
     }
     //</editor-fold>
 
+    // 使用 SwingWorker 执行 controlFactory 方法
+    private void startControlFactory() {
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                controlFactory(robot); // 在后台线程中执行 controlFactory 方法
+                return null;
+            }
+        }.execute();
+    }
+
     /**
      * 识别操作步骤
-     *
-     * @param robot robot
      */
     public void controlFactory(Robot robot) {
         jumpFlag = false;
         toolFlag = false;
         int globalTimeout = 1;
-        if (Objects.equals(flag, true)) {
+        while (flag) {
+            System.err.println("1");
             Duration dur = Duration.between(startTime, LocalDateTime.now());
             if (dur.toMinutes() > 420) {
+                flag = false;
                 System.exit(0);
             }
             try {
@@ -103,11 +130,13 @@ public class Click {
                     screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
+                System.err.println("2");
                 // 开始匹配
                 Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
                 if (Objects.nonNull(startMatch)) {
                     Thread.sleep(1000 * 5);
                 }
+                System.err.println("3");
                 // 马上开始
                 Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
                 if (Objects.nonNull(nowStart)) {
@@ -220,21 +249,12 @@ public class Click {
             }
             // 防止没有观战
             screen.type(Keys.PAGE_DOWN);
-        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        controlFactory(robot);
-    }
-
-    public Click() {
-        try {
-            PrintStream print = new PrintStream("log.txt");
-            System.setOut(print);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // 防止太快
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
         }
     }
 
