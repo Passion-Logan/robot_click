@@ -117,7 +117,6 @@ public class Click {
         toolFlag = false;
         int globalTimeout = 1;
         while (flag) {
-            System.err.println("1");
             Duration dur = Duration.between(startTime, LocalDateTime.now());
             if (dur.toMinutes() > 420) {
                 flag = false;
@@ -130,13 +129,11 @@ public class Click {
                     screen.hover(globalPath + "\\img\\start.png");
                     screen.click();
                 }
-                System.err.println("2");
                 // 开始匹配
                 Match startMatch = screen.exists(globalPath + "\\img\\startMatch.png", globalTimeout);
                 if (Objects.nonNull(startMatch)) {
                     Thread.sleep(1000 * 5);
                 }
-                System.err.println("3");
                 // 马上开始
                 Match nowStart = screen.exists(globalPath + "\\img\\nowStart.png", globalTimeout);
                 if (Objects.nonNull(nowStart)) {
